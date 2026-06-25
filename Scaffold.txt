@@ -1,0 +1,84 @@
+﻿Scaffold-DbContext "Server=LAPTOP-0U87C844;Database=InvoiceTokendb;Trusted_Connection=True;TrustServerCertificate=True" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models -force
+
+create database InvoiceTokenDb;
+
+use InvoiceTokenDb;
+
+create table TblCustomers
+(
+CustomerId int identity primary key,
+CustomerName varchar(50),
+MobileNumber varchar(20),
+City varchar(40)
+)
+
+create table TblEmployees
+(
+EmployeeId int identity primary key,
+EmployeeName varchar(50),
+EmailAddress varchar(50),
+EmployeeCode varchar(10) unique not null,
+Password varchar(50),
+Designation varchar(30)
+)
+
+insert into TblCustomers values('Ajay','8976568908','Pune'),('Amit','0987645678','Mumbai');
+insert into TblCustomers values('Kunal','1234567890','Thane'),('Kirti','9874563210','Katraj');
+
+select * from TblCustomers
+
+insert into TblEmployees values
+('Kartik Kulkarni','kartik@gmail.com','E001','Kartik@1234','Tester'),
+('Saurav Gadekar','sauravgadekar24@gmail.com','E002','Saurav@1234','Developer'),
+('Gargi Pandhare','gargi@gmail.com','E003','gargi@1234','HR'),
+('Pravin Jadhav','pravin@gmail.com','E004','pravin@1234','Manager'),
+('Kumar Dange','kumar@gmail.com','E005','kumar@1234','QA Analyst');
+
+select * from TblEmployees
+
+create table TblProducts
+(
+ProductId int identity primary key,
+ProductName varchar(25),
+Rate float ,
+Gst float,
+StockQuantity float
+)
+
+select * from TblProducts;
+
+
+create table TblInvoiceDetails
+(
+InvoiceId int identity primary key,
+CustomerId int constraint ckid foreign key references TblCustomers(CustomerId),
+InvoiceDate date,
+TotalAmount float,
+Status varchar(max)
+)
+
+create table TblInvoiceProducts
+(
+InvoiceProductId int identity primary key,
+InvoiceId int constraint inid foreign key references TblInvoiceDetails(InvoiceId),
+ProductId int constraint pdid foreign key references TblProducts(ProductId),
+Quantity int 
+)
+
+select * from TblInvoiceProducts
+
+
+create table TblInvoicePayments
+(
+PaymentId int identity primary key,
+InvoiceId int constraint icid foreign key references TblInvoiceDetails(InvoiceId),
+PaymentDate date,
+PaymentAmount float,
+PaymentMode varchar(50),
+Description varchar(50)
+)
+
+select * from TblInvoicePayments
+
+
+

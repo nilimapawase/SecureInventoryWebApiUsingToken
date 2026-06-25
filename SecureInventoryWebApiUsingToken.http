@@ -1,0 +1,6 @@
+@SecureInventoryWebApiUsingToken_HostAddress = http://localhost:5108
+
+GET {{SecureInventoryWebApiUsingToken_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
